@@ -1,6 +1,6 @@
-#jedit
+# jedit
 
-#Prerequisites -
+## Prerequisites -
 1. [Install Maven](https://maven.apache.org/install.html)
 2. Install the voce library to your local Maven repository:
 - ```git clone https://github.com/jrichardsz/voce.git``` [link to repository](https://github.com/jrichardsz/voce)
