@@ -53,8 +53,6 @@ public class TextDemo extends JPanel implements ActionListener {
     protected UndoManager undoManager;
 
     Clipboard clipboard;
-
-    //TranscriberDemo speech2Text;
     synthesisTest text2Speech;
 
     public TextDemo() {
@@ -106,6 +104,7 @@ public class TextDemo extends JPanel implements ActionListener {
         c.weighty = 1;
         add(scrollPane, c);
 
+        /*
         GridBagConstraints c_button = new GridBagConstraints();
         c_button.insets = new Insets(2, 5, 5, 2);
         c_button.fill = GridBagConstraints.BOTH;
@@ -170,6 +169,7 @@ public class TextDemo extends JPanel implements ActionListener {
         c_button.gridx = 4;
         c_button.gridy = 4;
         add(button_selectAll, c_button);
+        */
 
         button_t2s.addActionListener(this);
         button_t2s.setActionCommand("text2speech");
@@ -535,13 +535,20 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.getContentPane().add(tD);
 
         JMenuBar menuBar;
-        JMenu editMenu, fileMenu, formatMenu;
+        JMenu editMenu, fileMenu, formatMenu, speechMenu;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
         JMenuItem fontMenuItem;
+        JMenuItem t2sMenuItem, s2tMenuItem;
 
         //Create the menu bar.
         menuBar = new JMenuBar();
+
+
+
+
+
+
 
         //Build the file menu
         fileMenu = new JMenu("File");
@@ -695,6 +702,47 @@ public class TextDemo extends JPanel implements ActionListener {
         fontMenuItem.addActionListener(tD);
         fontMenuItem.setActionCommand("font");
         formatMenu.add(fontMenuItem);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Build the format menu
+        speechMenu = new JMenu("Speech");
+        speechMenu.setMnemonic(KeyEvent.VK_A);
+        speechMenu.getAccessibleContext().setAccessibleDescription(
+                "The speech menu contains text to speech and speech to text options.");
+        menuBar.add(speechMenu);
+
+        t2sMenuItem = new JMenuItem("Text to Speech",
+                KeyEvent.VK_T);
+        t2sMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        t2sMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Reads the document.");
+        t2sMenuItem.addActionListener(tD);
+        t2sMenuItem.setActionCommand("text2speech");
+        speechMenu.add(t2sMenuItem);
+
+        s2tMenuItem = new JMenuItem("Speech to Text",
+                KeyEvent.VK_T);
+        s2tMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        s2tMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Listens to the user and adds the text to the document.");
+        s2tMenuItem.addActionListener(tD);
+        s2tMenuItem.setActionCommand("speech2text");
+        speechMenu.add(s2tMenuItem);
+
+
 
         frame.setJMenuBar(menuBar);
 
