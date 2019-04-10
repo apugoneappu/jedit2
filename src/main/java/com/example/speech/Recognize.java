@@ -39,7 +39,7 @@ import javax.sound.sampled.TargetDataLine;
 
 public class Recognize {
 
-    String text;
+    String text = "";
 
     Recognize() throws Exception {
 
@@ -61,7 +61,7 @@ public class Recognize {
                             StreamingRecognitionResult result = response.getResultsList().get(0);
                             SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
                             System.out.printf("Transcript : %s\n", alternative.getTranscript());
-                            text = "" + alternative.getTranscript();
+                            text = text + "" + alternative.getTranscript();
                         }
                     }
 

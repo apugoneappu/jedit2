@@ -465,9 +465,88 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setPreferredSize(new Dimension(800, 500));
+        TextDemo tD = new TextDemo();
+        frame.getContentPane().add(tD);
+
+        JMenuBar menuBar;
+        JMenu editMenu, fileMenu;
+        JMenuItem newMenuItem, saveMenuItem; 
+        JMenuItem cutMenuItem, copyMenuItem, pasteMenuItem;
+
+        //Create the menu bar.
+        menuBar = new JMenuBar();
+
+        //Build the file menu
+        fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_A);
+        fileMenu.getAccessibleContext().setAccessibleDescription(
+                "The File menu contains options like new, save and paste.");
+        menuBar.add(fileMenu);
+
+        //a group of JMenuItems
+        newMenuItem = new JMenuItem("new",
+                KeyEvent.VK_T);
+        newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        newMenuItem.getAccessibleContext().setAccessibleDescription(
+                "If the current file is not saved, ask the user to save. Closed the saved file and open a new document.");
+        newMenuItem.addActionListener(tD);
+        newMenuItem.setActionCommand("new");
+        fileMenu.add(newMenuItem);
+
+        saveMenuItem = new JMenuItem("save",
+                KeyEvent.VK_T);
+        saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        saveMenuItem.getAccessibleContext().setAccessibleDescription(
+                "If the current file is not saved, ask the user to save. Otherwise, overwrite the current saved file.");
+        saveMenuItem.addActionListener(tD);
+        saveMenuItem.setActionCommand("save");
+        fileMenu.add(saveMenuItem);
+
+
+        //Build the edit menu.
+        editMenu = new JMenu("Edit");
+        editMenu.setMnemonic(KeyEvent.VK_A);
+        editMenu.getAccessibleContext().setAccessibleDescription(
+                "The Edit menu contains editing options like cut, copy and paste.");
+        menuBar.add(editMenu);
+
+        //a group of JMenuItems
+        cutMenuItem = new JMenuItem("Cut",
+                KeyEvent.VK_T);
+        cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        cutMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Cut the selected text, or cut all text if no selection is made.");
+        cutMenuItem.addActionListener(tD);
+        cutMenuItem.setActionCommand("cut");
+        editMenu.add(cutMenuItem);
+
+        copyMenuItem = new JMenuItem("Copy",
+                KeyEvent.VK_T);
+        copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        copyMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Copy the selected text, or copy all text if no selection is made.");
+        copyMenuItem.addActionListener(tD);
+        copyMenuItem.setActionCommand("copy");
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem = new JMenuItem("paste",
+                KeyEvent.VK_T);
+        pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        pasteMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        pasteMenuItem.addActionListener(tD);
+        pasteMenuItem.setActionCommand("paste");
+        editMenu.add(pasteMenuItem);
+
+
+        frame.setJMenuBar(menuBar);
 
         //Add contents to the window.
-        frame.getContentPane().add(new TextDemo());
 
         frame.setIconImage(new ImageIcon("yo.png").getImage());
 
