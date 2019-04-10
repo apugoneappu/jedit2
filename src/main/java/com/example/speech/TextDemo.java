@@ -31,6 +31,8 @@ import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.UndoManager;
 
+import org.drjekyll.fontchooser.*;
+
 
 public class TextDemo extends JPanel implements ActionListener {
 
@@ -354,28 +356,11 @@ public class TextDemo extends JPanel implements ActionListener {
         // For font command
         if (evt.getActionCommand().equals("font")) {
 
-            String filename = "";
-            try{
-                final JFileChooser fc = new JFileChooser("./fonts");
+            try {
+            FontDialog.showDialog(editorPane);
 
-                // Creates the dialogue box
-                int r = fc.showOpenDialog(null); 
-
-                // if the user selects a file 
-                if (r == JFileChooser.APPROVE_OPTION) 
-                { 
-                    // set the label to the path of the selected file 
-                    filename = fc.getSelectedFile().getName(); 
-                } 
-
-                editorPane.setFont(new Font(filename,0,14));
-                // editorPane.setSelectedTextColor(Color.green);
-
-                // String text; 
-                // while ((text = br.readLine()) != null) 
-                //   editorPane.setText(editorPane.getText() + " \n" + text); 
-
-            }catch(Exception e)
+            }
+            catch(Exception e)
             {
                 System.out.println("Exception:"+e);
             }
@@ -552,16 +537,16 @@ public class TextDemo extends JPanel implements ActionListener {
 
         //Build the file menu
         fileMenu = new JMenu("File");
-        fileMenu.setMnemonic(KeyEvent.VK_A);
+        fileMenu.setMnemonic(KeyEvent.VK_F);
         fileMenu.getAccessibleContext().setAccessibleDescription(
                 "The File menu contains options like new, open and save.");
         menuBar.add(fileMenu);
 
         //a group of JMenuItems
         newMenuItem = new JMenuItem("New",
-                KeyEvent.VK_T);
+                KeyEvent.VK_N);
         newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_N, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         newMenuItem.getAccessibleContext().setAccessibleDescription(
                 "If the current file is not saved, ask the user to save. Closed the saved file and open a new document.");
         newMenuItem.addActionListener(tD);
@@ -569,9 +554,9 @@ public class TextDemo extends JPanel implements ActionListener {
         fileMenu.add(newMenuItem);
 
         openMenuItem = new JMenuItem("Open",
-                KeyEvent.VK_T);
+                KeyEvent.VK_O);
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         openMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Open a file from the disk");
         openMenuItem.addActionListener(tD);
@@ -580,9 +565,9 @@ public class TextDemo extends JPanel implements ActionListener {
 
 
         saveMenuItem = new JMenuItem("Save",
-                KeyEvent.VK_T);
+                KeyEvent.VK_S);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         saveMenuItem.getAccessibleContext().setAccessibleDescription(
                 "If the current file is not saved, ask the user to save. Otherwise, overwrite the current saved file.");
         saveMenuItem.addActionListener(tD);
@@ -600,16 +585,16 @@ public class TextDemo extends JPanel implements ActionListener {
 
         //Build the edit menu.
         editMenu = new JMenu("Edit");
-        editMenu.setMnemonic(KeyEvent.VK_A);
+        editMenu.setMnemonic(KeyEvent.VK_E);
         editMenu.getAccessibleContext().setAccessibleDescription(
                 "The Edit menu contains editing options like undo, redo, cut, copy and paste, find and replace functionality.");
         menuBar.add(editMenu);
 
         //a group of JMenuItems
         selectAllMenuItem = new JMenuItem("Select All",
-                KeyEvent.VK_T);
+                KeyEvent.VK_A);
         selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_A, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         selectAllMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Selects all the text of the document.");
         selectAllMenuItem.addActionListener(tD);
@@ -617,9 +602,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(selectAllMenuItem);
 
         undoMenuItem = new JMenuItem("Undo",
-                KeyEvent.VK_T);
+                KeyEvent.VK_U);
         undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_U, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         undoMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Undoes the last operation.");
         undoMenuItem.addActionListener(tD);
@@ -627,9 +612,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(undoMenuItem);
 
         redoMenuItem = new JMenuItem("Redo",
-                KeyEvent.VK_T);
+                KeyEvent.VK_R);
         redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_R, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         redoMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Redo the last undo operation.");
         redoMenuItem.addActionListener(tD);
@@ -637,9 +622,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(redoMenuItem);
 
         cutMenuItem = new JMenuItem("Cut",
-                KeyEvent.VK_T);
+                KeyEvent.VK_X);
         cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_X, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         cutMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Cut the selected text, or cut all text if no selection is made.");
         cutMenuItem.addActionListener(tD);
@@ -647,9 +632,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(cutMenuItem);
 
         copyMenuItem = new JMenuItem("Copy",
-                KeyEvent.VK_T);
+                KeyEvent.VK_C);
         copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_C, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         copyMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Copy the selected text, or copy all text if no selection is made.");
         copyMenuItem.addActionListener(tD);
@@ -657,9 +642,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(copyMenuItem);
 
         pasteMenuItem = new JMenuItem("Paste",
-                KeyEvent.VK_T);
+                KeyEvent.VK_P);
         pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_V, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         pasteMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
         pasteMenuItem.addActionListener(tD);
@@ -667,9 +652,9 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(pasteMenuItem);
 
         fandrMenuItem = new JMenuItem("Find and Replace",
-                KeyEvent.VK_T);
+                KeyEvent.VK_F);
         fandrMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_F, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         fandrMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Find and replace text in the document");
         fandrMenuItem.addActionListener(tD);
@@ -688,15 +673,15 @@ public class TextDemo extends JPanel implements ActionListener {
 
         //Build the format menu
         formatMenu = new JMenu("Format");
-        formatMenu.setMnemonic(KeyEvent.VK_A);
+        formatMenu.setMnemonic(KeyEvent.VK_O);
         formatMenu.getAccessibleContext().setAccessibleDescription(
                 "The Format menu contains options like changing font family, size etc..");
         menuBar.add(formatMenu);
 
         fontMenuItem = new JMenuItem("Font",
-                KeyEvent.VK_T);
+                KeyEvent.VK_F);
         fontMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_D, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         fontMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Changes the font of the document text");
         fontMenuItem.addActionListener(tD);
@@ -715,9 +700,9 @@ public class TextDemo extends JPanel implements ActionListener {
 
 
 
-        //Build the format menu
+        //Build the speech menu
         speechMenu = new JMenu("Speech");
-        speechMenu.setMnemonic(KeyEvent.VK_A);
+        speechMenu.setMnemonic(KeyEvent.VK_S);
         speechMenu.getAccessibleContext().setAccessibleDescription(
                 "The speech menu contains text to speech and speech to text options.");
         menuBar.add(speechMenu);
@@ -725,7 +710,7 @@ public class TextDemo extends JPanel implements ActionListener {
         t2sMenuItem = new JMenuItem("Text to Speech",
                 KeyEvent.VK_T);
         t2sMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_T, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         t2sMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Reads the document.");
         t2sMenuItem.addActionListener(tD);
@@ -733,9 +718,9 @@ public class TextDemo extends JPanel implements ActionListener {
         speechMenu.add(t2sMenuItem);
 
         s2tMenuItem = new JMenuItem("Speech to Text",
-                KeyEvent.VK_T);
+                KeyEvent.VK_S);
         s2tMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+                    KeyEvent.VK_S, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         s2tMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Listens to the user and adds the text to the document.");
         s2tMenuItem.addActionListener(tD);
@@ -748,7 +733,7 @@ public class TextDemo extends JPanel implements ActionListener {
 
         //Add contents to the window.
 
-        frame.setIconImage(new ImageIcon("yo.png").getImage());
+        frame.setIconImage(new ImageIcon("./resources/yo.png").getImage());
 
         //Display the window.
         frame.pack();
