@@ -19,6 +19,6 @@ We can now use the Voce library in our Maven project:
 	<version>0.9.1</version>
 </dependency>
 ```
-3. Install the [Google Cloud Speech Library](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries), follow these steps:
-- 
+3. Set up the environment for the [Google Cloud Speech Library](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries), follow these steps:
+- ```echo export GOOGLE_APPLICATION_CREDENTIALS="[path_to_current_repo]/Jedit-d618ac66ba93.json" >> ~/.bashrc``` 
 
