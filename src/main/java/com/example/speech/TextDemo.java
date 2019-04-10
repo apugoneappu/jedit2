@@ -6,6 +6,32 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.datatransfer.*;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
+
+
 public class TextDemo extends JPanel implements ActionListener {
 
     String file = "";
@@ -24,6 +50,7 @@ public class TextDemo extends JPanel implements ActionListener {
     protected JButton button_redo;
     protected JButton button_selectAll;
     protected JButton button_font;
+    protected UndoManager undoManager;
 
     Clipboard clipboard;
 
@@ -35,6 +62,8 @@ public class TextDemo extends JPanel implements ActionListener {
         super(new GridBagLayout());
 
         text2Speech = new synthesisTest();
+
+        undoManager = new UndoManager();
 
         clipboard = Toolkit.getDefaultToolkit( ).getSystemClipboard( );
         button_t2s = new JButton("Text To Speech");
@@ -54,6 +83,16 @@ public class TextDemo extends JPanel implements ActionListener {
 
         editorPane = new JEditorPane();
         JScrollPane scrollPane = new JScrollPane(editorPane);
+
+        editorPane.getDocument().addUndoableEditListener(
+                new UndoableEditListener() {
+                    public void undoableEditHappened(UndoableEditEvent e) {
+                        undoManager.addEdit(e.getEdit());
+                        updateButtons();
+                    }
+                });
+
+
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
@@ -167,7 +206,16 @@ public class TextDemo extends JPanel implements ActionListener {
 
         button_font.addActionListener(this);
         button_font.setActionCommand("font");
-        UndoRedo undo = new UndoRedo(editorPane, button_undo, button_redo);
+
+        button_undo.addActionListener(this);
+        button_undo.setActionCommand("undo");
+
+        button_redo.addActionListener(this);
+        button_redo.setActionCommand("redo");
+
+        button_undo.setEnabled(false);
+        button_redo.setEnabled(false);
+
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -449,6 +497,24 @@ public class TextDemo extends JPanel implements ActionListener {
             editorPane.setText(str); 
         }
 
+        if (evt.getActionCommand().equals("undo")) {
+            try {
+                undoManager.undo();
+            } catch (CannotRedoException cre) {
+                //cre.printStackTrace();
+            }
+            updateButtons();
+
+        }
+        if (evt.getActionCommand().equals("redo")) {
+            try {
+                undoManager.redo();
+            } catch (CannotRedoException cre) {
+                //cre.printStackTrace();
+            }
+            updateButtons();
+
+        }
 
     }
 
@@ -469,9 +535,10 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.getContentPane().add(tD);
 
         JMenuBar menuBar;
-        JMenu editMenu, fileMenu;
+        JMenu editMenu, fileMenu, formatMenu;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
-        JMenuItem undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
+        JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
+        JMenuItem fontMenuItem;
 
         //Create the menu bar.
         menuBar = new JMenuBar();
@@ -516,6 +583,14 @@ public class TextDemo extends JPanel implements ActionListener {
         fileMenu.add(saveMenuItem);
 
 
+
+
+
+
+
+
+
+
         //Build the edit menu.
         editMenu = new JMenu("Edit");
         editMenu.setMnemonic(KeyEvent.VK_A);
@@ -524,6 +599,16 @@ public class TextDemo extends JPanel implements ActionListener {
         menuBar.add(editMenu);
 
         //a group of JMenuItems
+        selectAllMenuItem = new JMenuItem("Select All",
+                KeyEvent.VK_T);
+        selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        selectAllMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Selects all the text of the document.");
+        selectAllMenuItem.addActionListener(tD);
+        selectAllMenuItem.setActionCommand("selectAll");
+        editMenu.add(selectAllMenuItem);
+
         undoMenuItem = new JMenuItem("Undo",
                 KeyEvent.VK_T);
         undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -585,6 +670,32 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu.add(fandrMenuItem);
 
 
+
+
+
+
+
+
+
+
+
+        //Build the format menu
+        formatMenu = new JMenu("Format");
+        formatMenu.setMnemonic(KeyEvent.VK_A);
+        formatMenu.getAccessibleContext().setAccessibleDescription(
+                "The Format menu contains options like changing font family, size etc..");
+        menuBar.add(formatMenu);
+
+        fontMenuItem = new JMenuItem("Font",
+                KeyEvent.VK_T);
+        fontMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        fontMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Changes the font of the document text");
+        fontMenuItem.addActionListener(tD);
+        fontMenuItem.setActionCommand("font");
+        formatMenu.add(fontMenuItem);
+
         frame.setJMenuBar(menuBar);
 
         //Add contents to the window.
@@ -605,5 +716,10 @@ public class TextDemo extends JPanel implements ActionListener {
                 createAndShowGUI();
             }
         });
+    }
+
+    public void updateButtons() {
+        button_undo.setEnabled(undoManager.canUndo());
+        button_redo.setEnabled(undoManager.canRedo());
     }
 }
