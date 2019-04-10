@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.datatransfer.*;
 
-public class UndoRedo extends JFrame {
+public class UndoRedo extends JFrame implements ActionListener{
 
     protected UndoManager undoManager = new UndoManager();
     protected JButton undoButton;
@@ -45,35 +45,36 @@ public class UndoRedo extends JFrame {
                     }
                 });
 
-        undoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        undoButton.addActionListener(editorPane);
+        undoButton.setActionCommand("undo");
+
+        redoButton.addActionListener(editorPane);
+        redoButton.setActionCommand("redo");
+
+    }
+
+    public void actionPerformed(ActionEvent evt) {
+        if (evt.getActionCommand().equals("undo")) {
                 try {
                     undoManager.undo();
                 } catch (CannotRedoException cre) {
                     //cre.printStackTrace();
                 }
                 updateButtons();
-            }
-        });
 
-        redoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        }
+        if (evt.getActionCommand().equals("redo")) {
                 try {
                     undoManager.redo();
                 } catch (CannotRedoException cre) {
                     //cre.printStackTrace();
                 }
                 updateButtons();
-            }
-        });
 
-        //setSize(400, 300);
-        //setVisible(true);
+        }
     }
 
     public void updateButtons() {
-        //undoButton.setText(undoManager.getUndoPresentationName());
-        //redoButton.setText(undoManager.getRedoPresentationName());
         undoButton.setEnabled(undoManager.canUndo());
         redoButton.setEnabled(undoManager.canRedo());
     }

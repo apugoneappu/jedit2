@@ -470,8 +470,8 @@ public class TextDemo extends JPanel implements ActionListener {
 
         JMenuBar menuBar;
         JMenu editMenu, fileMenu;
-        JMenuItem newMenuItem, saveMenuItem; 
-        JMenuItem cutMenuItem, copyMenuItem, pasteMenuItem;
+        JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
+        JMenuItem undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
 
         //Create the menu bar.
         menuBar = new JMenuBar();
@@ -480,11 +480,11 @@ public class TextDemo extends JPanel implements ActionListener {
         fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_A);
         fileMenu.getAccessibleContext().setAccessibleDescription(
-                "The File menu contains options like new, save and paste.");
+                "The File menu contains options like new, open and save.");
         menuBar.add(fileMenu);
 
         //a group of JMenuItems
-        newMenuItem = new JMenuItem("new",
+        newMenuItem = new JMenuItem("New",
                 KeyEvent.VK_T);
         newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                     KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -494,7 +494,18 @@ public class TextDemo extends JPanel implements ActionListener {
         newMenuItem.setActionCommand("new");
         fileMenu.add(newMenuItem);
 
-        saveMenuItem = new JMenuItem("save",
+        openMenuItem = new JMenuItem("Open",
+                KeyEvent.VK_T);
+        openMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        openMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Open a file from the disk");
+        openMenuItem.addActionListener(tD);
+        openMenuItem.setActionCommand("open");
+        fileMenu.add(openMenuItem);
+
+
+        saveMenuItem = new JMenuItem("Save",
                 KeyEvent.VK_T);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                     KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -509,10 +520,30 @@ public class TextDemo extends JPanel implements ActionListener {
         editMenu = new JMenu("Edit");
         editMenu.setMnemonic(KeyEvent.VK_A);
         editMenu.getAccessibleContext().setAccessibleDescription(
-                "The Edit menu contains editing options like cut, copy and paste.");
+                "The Edit menu contains editing options like undo, redo, cut, copy and paste, find and replace functionality.");
         menuBar.add(editMenu);
 
         //a group of JMenuItems
+        undoMenuItem = new JMenuItem("Undo",
+                KeyEvent.VK_T);
+        undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        undoMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Undoes the last operation.");
+        undoMenuItem.addActionListener(tD);
+        undoMenuItem.setActionCommand("undo");
+        editMenu.add(undoMenuItem);
+
+        redoMenuItem = new JMenuItem("Redo",
+                KeyEvent.VK_T);
+        redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        redoMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Redo the last undo operation.");
+        redoMenuItem.addActionListener(tD);
+        redoMenuItem.setActionCommand("redo");
+        editMenu.add(redoMenuItem);
+
         cutMenuItem = new JMenuItem("Cut",
                 KeyEvent.VK_T);
         cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -533,7 +564,7 @@ public class TextDemo extends JPanel implements ActionListener {
         copyMenuItem.setActionCommand("copy");
         editMenu.add(copyMenuItem);
 
-        pasteMenuItem = new JMenuItem("paste",
+        pasteMenuItem = new JMenuItem("Paste",
                 KeyEvent.VK_T);
         pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                     KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -542,6 +573,16 @@ public class TextDemo extends JPanel implements ActionListener {
         pasteMenuItem.addActionListener(tD);
         pasteMenuItem.setActionCommand("paste");
         editMenu.add(pasteMenuItem);
+
+        fandrMenuItem = new JMenuItem("Find and Replace",
+                KeyEvent.VK_T);
+        fandrMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        fandrMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Find and replace text in the document");
+        fandrMenuItem.addActionListener(tD);
+        fandrMenuItem.setActionCommand("fandr");
+        editMenu.add(fandrMenuItem);
 
 
         frame.setJMenuBar(menuBar);
