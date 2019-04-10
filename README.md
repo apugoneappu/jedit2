@@ -18,6 +18,8 @@
 ## Steps to build the Maven project -
 1. Change directory to the cloned directory.
 2. ```mvn package```
+The first build may take some time as some components are downloaded from the Maven repository. Please be patient.
+
 
 ## Steps to run the Maven project -
 1. Change directory to the cloned directory.
