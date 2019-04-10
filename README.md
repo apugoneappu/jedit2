@@ -7,18 +7,17 @@
 - Change to the offline-jars directory and run the following commands.
 - ```mvn install:install-file -Dfile=sphinx4-1.0.jar -DgroupId=edu.cmu.sphinx -DartifactId=sphinx4 -Dversion=1.0 -Dpackaging=jar```
 - ```mvn install:install-file -Dfile=jsapi-1.0.jar -DgroupId=javax.speech -DartifactId=jsapi -Dversion=1.0 -Dpackaging=jar```
-- Change directory to the clone folder. 
+- Change directory to the cloned folder. 
 - ```mvn clean package```
 - ```mvn clean install```
+- [Optional] Remove the cloned directory
 
-We can now use the Voce library in our Maven project:
-```xml
-<dependency>
-	<groupId>voce</groupId>
-	<artifactId>voce</artifactId>
-	<version>0.9.1</version>
-</dependency>
-```
-3. Set up the environment for the [Google Cloud Speech Library](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries), follow these steps:
-- ```echo export GOOGLE_APPLICATION_CREDENTIALS="[path_to_current_repo]/Jedit-d618ac66ba93.json" >> ~/.bashrc``` 
+3. Set up the environment for the [Google Cloud Speech Library](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries), follow these steps after changing directory to the clone repostory:
+- ```echo 'export GOOGLE_APPLICATION_CREDENTIALS="$PWD/Jedit-d618ac66ba93.json"' >> ~/.bashrc``` 
 
+## Steps to build the Maven project -
+1. Change directory to the cloned directory.
+2. ```mvn package```
+
+## Steps to run the Maven project -
+1. ```mvn -exec:java -DTextDemo```
