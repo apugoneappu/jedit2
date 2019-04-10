@@ -1,5 +1,8 @@
 # jedit
 
+## Build status - 
+[![Build Status](https://travis-ci.com/apugoneappu/jedit2.svg?token=3rjyHtzBq9YfjUwjqaEg&branch=master)](https://travis-ci.com/apugoneappu/jedit2)
+
 ## Prerequisites -
 1. [Install Maven](https://maven.apache.org/install.html)
 2. Install the voce library to your local Maven repository:
