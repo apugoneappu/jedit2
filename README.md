@@ -1,9 +1,6 @@
-jedit
-==============================================
+#jedit
 
-Steps to build -
----------------------------------------------
-
+#Prerequisites -
 1. [Install Maven](https://maven.apache.org/install.html)
 2. Install the voce library to your local Maven repository:
 - ```git clone https://github.com/jrichardsz/voce.git``` [link to repository](https://github.com/jrichardsz/voce)
@@ -15,16 +12,11 @@ Steps to build -
 - ```mvn clean install```
 
 We can now use the Voce library in our Maven project:
-```
+```xml
 <dependency>
 	<groupId>voce</groupId>
 	<artifactId>voce</artifactId>
 	<version>0.9.1</version>
 </dependency>
 ```
-
-
-
-
-
-
+3. Install the [Google Cloud Speech Library](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries)
