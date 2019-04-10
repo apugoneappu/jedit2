@@ -471,11 +471,17 @@ public class TextDemo extends JPanel implements ActionListener {
 
                     fw.close(); 
 
+
                 }catch(Exception e)
                 {
-                    System.out.println("Exception:"+e);
+                    System.out.println(e);
                 }
             } 
+
+            if (filename.equals("")) {
+                editorPane.setText(str); 
+                return;
+            }
 
             file = "";
             str = "";
