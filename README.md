@@ -6,7 +6,6 @@ Steps to build -
 
 1. [Install Maven](https://maven.apache.org/install.html)
 2. Install the voce library to your local Maven repository.
-------------------------------------------------
 2.1. Clone [this](https://github.com/jrichardsz/voce) repository. 
 ```git clone https://github.com/jrichardsz/voce.git``` 
 2.2 Change to the offline-jars directory and run the following commands.
