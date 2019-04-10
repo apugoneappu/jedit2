@@ -20,4 +20,5 @@
 2. ```mvn package```
 
 ## Steps to run the Maven project -
-1. ```mvn -exec:java -DTextDemo```
+1. Change directory to the cloned directory.
+2. ```mvn -exec:java -DTextDemo```
