@@ -1,11 +1,11 @@
 com/example/speech/Snippet.class
 com/example/texttospeech/QuickstartSample.class
-com/example/texttospeech/ListAllSupportedVoices.class
 com/example/speech/TextDemo.class
+com/example/texttospeech/ListAllSupportedVoices.class
 com/example/speech/ClockPane.class
 com/example/texttospeech/SynthesizeFile.class
-com/example/speech/TextDemo$1.class
 com/example/speech/synthesisTest.class
+com/example/speech/TextDemo$1.class
 com/example/speech/AudioTest.class
 com/example/speech/TextDemo$2.class
 com/example/speech/ClockPane$1.class
