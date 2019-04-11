@@ -34,7 +34,7 @@ import javax.swing.undo.UndoManager;
 import org.drjekyll.fontchooser.*;
 
 
-public class TextDemo extends JPanel implements ActionListener {
+public class TextDemo extends JPanel implements ActionListener{
 
     String file = "";
     protected JEditorPane editorPane;
@@ -219,6 +219,7 @@ public class TextDemo extends JPanel implements ActionListener {
         button_redo.setEnabled(false);
 
     }
+ 
 
     public void actionPerformed(ActionEvent evt) {
 
@@ -282,8 +283,116 @@ public class TextDemo extends JPanel implements ActionListener {
             try {
                 Transferable t = clipboard.getContents(null);
                 if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                    String text = (String)t.getTransferData(DataFlavor.stringFlavor);
-                    editorPane.getDocument().insertString(editorPane.getCaretPosition(), text, null);
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[0], null);
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        }
+        
+
+        if (evt.getActionCommand().equals("clipboard_1")) {
+
+            try {
+                Transferable t = clipboard.getContents(null);
+                if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    if( text.length>1 )
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[1], null);
+                    else
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), "", null);
+
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        }
+
+        if (evt.getActionCommand().equals("clipboard_2")) {
+
+            try {
+                Transferable t = clipboard.getContents(null);
+                if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    if( text.length>2 )
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[2], null);
+                    else
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), "", null);
+
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        }
+
+        if (evt.getActionCommand().equals("clipboard_3")) {
+
+            try {
+                Transferable t = clipboard.getContents(null);
+                if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    if( text.length>3 )
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[3], null);
+                    else
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), "", null);
+
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        }
+
+        if (evt.getActionCommand().equals("clipboard_4")) {
+
+            try {
+                Transferable t = clipboard.getContents(null);
+                if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    if( text.length>4 )
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[4], null);
+                    else
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), "", null);
+
+                }
+            }
+            catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+        }
+
+        if (evt.getActionCommand().equals("clipboard_5")) {
+
+            try {
+                Transferable t = clipboard.getContents(null);
+                if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String layeredText = (String)t.getTransferData(DataFlavor.stringFlavor);
+                    
+                    String[] text = layeredText.split("`");
+                    if( text.length>5 )
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), text[5], null);
+                    else
+                        editorPane.getDocument().insertString(editorPane.getCaretPosition(), "", null);
+
                 }
             }
             catch (Exception ex) {
@@ -308,7 +417,21 @@ public class TextDemo extends JPanel implements ActionListener {
             //some text is selected, copy only that
             else {
                 try {
-                    StringSelection data = new StringSelection(editorPane.getSelectedText());
+                    String text = ""; 
+                    Transferable t = clipboard.getContents(null);
+                    if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                        text = (String)t.getTransferData(DataFlavor.stringFlavor);
+                        // editorPane.getDocument().insertString(editorPane.getCaretPosition(), text, null);
+                    }
+                    String layeredText="";
+                    
+                    if(text.isEmpty())
+                        layeredText = editorPane.getSelectedText();
+                    else
+                        layeredText = editorPane.getSelectedText() + "`" + text;
+                    
+
+                    StringSelection data = new StringSelection(layeredText);
                     clipboard.setContents(data, data);
                 }
                 catch (Exception ex) {
@@ -526,9 +649,10 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.getContentPane().add(tD);
 
         JMenuBar menuBar;
-        JMenu editMenu, fileMenu, formatMenu, speechMenu;
+        JMenu editMenu, fileMenu, formatMenu, speechMenu, clipboardMenu;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
+        JMenuItem clipboardMenuItem_1, clipboardMenuItem_2, clipboardMenuItem_3, clipboardMenuItem_4, clipboardMenuItem_5;
         JMenuItem fontMenuItem;
         JMenuItem t2sMenuItem, s2tMenuItem;
 
@@ -657,6 +781,7 @@ public class TextDemo extends JPanel implements ActionListener {
         pasteMenuItem.setActionCommand("paste");
         editMenu.add(pasteMenuItem);
 
+
         fandrMenuItem = new JMenuItem("Find and Replace",
                 KeyEvent.VK_F);
         fandrMenuItem.setAccelerator(KeyStroke.getKeyStroke(
@@ -666,11 +791,6 @@ public class TextDemo extends JPanel implements ActionListener {
         fandrMenuItem.addActionListener(tD);
         fandrMenuItem.setActionCommand("fandr");
         editMenu.add(fandrMenuItem);
-
-
-
-
-
 
 
 
@@ -732,6 +852,66 @@ public class TextDemo extends JPanel implements ActionListener {
         s2tMenuItem.addActionListener(tD);
         s2tMenuItem.setActionCommand("speech2text");
         speechMenu.add(s2tMenuItem);
+
+
+
+
+        //Build the clipboard menu
+        clipboardMenu = new JMenu("Clipboard");
+        clipboardMenu.setMnemonic(KeyEvent.VK_C);
+        clipboardMenu.getAccessibleContext().setAccessibleDescription(
+                "The Clipboard menu contains options to paste multiple selections.");
+        menuBar.add(clipboardMenu);
+
+        clipboardMenuItem_1 = new JMenuItem("Clipboard 1",
+                KeyEvent.VK_1);
+        clipboardMenuItem_1.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_1, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        clipboardMenuItem_1.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        clipboardMenuItem_1.addActionListener(tD);
+        clipboardMenuItem_1.setActionCommand("clipboard_1");
+        clipboardMenu.add(clipboardMenuItem_1);
+
+        clipboardMenuItem_2 = new JMenuItem("Clipboard 2",
+                KeyEvent.VK_2);
+        clipboardMenuItem_2.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_2, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        clipboardMenuItem_2.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        clipboardMenuItem_2.addActionListener(tD);
+        clipboardMenuItem_2.setActionCommand("clipboard_2");
+        clipboardMenu.add(clipboardMenuItem_2);
+
+        clipboardMenuItem_3 = new JMenuItem("Clipboard 3",
+                KeyEvent.VK_3);
+        clipboardMenuItem_3.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_3, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        clipboardMenuItem_3.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        clipboardMenuItem_3.addActionListener(tD);
+        clipboardMenuItem_3.setActionCommand("clipboard_3");
+        clipboardMenu.add(clipboardMenuItem_3);
+
+        clipboardMenuItem_4 = new JMenuItem("Clipboard 4",
+                KeyEvent.VK_4);
+        clipboardMenuItem_4.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_4, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        clipboardMenuItem_4.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        clipboardMenuItem_4.addActionListener(tD);
+        clipboardMenuItem_4.setActionCommand("clipboard_4");
+        clipboardMenu.add(clipboardMenuItem_4);
+
+        clipboardMenuItem_5 = new JMenuItem("Clipboard 5",
+                KeyEvent.VK_5);
+        clipboardMenuItem_5.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_5, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        clipboardMenuItem_5.getAccessibleContext().setAccessibleDescription(
+                "Paste text from the system clipboard to the current carret position, or if carret is not present, append to the document.");
+        clipboardMenuItem_5.addActionListener(tD);
+        clipboardMenuItem_5.setActionCommand("clipboard_5");
+        clipboardMenu.add(clipboardMenuItem_5);
 
 
 

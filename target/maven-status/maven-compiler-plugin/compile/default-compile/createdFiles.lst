@@ -1,11 +1,11 @@
-com/example/speech/Snippet.class
 com/example/speech/TextDemo$2.class
-com/example/speech/QuickstartSample.class
+com/example/speech/Snippet.class
 com/example/speech/TextDemo.class
+com/example/speech/QuickstartSample.class
 com/example/speech/InfiniteStreamRecognize$1.class
 com/example/speech/InfiniteStreamRecognize$1MicBuffer.class
 com/example/speech/InfiniteStreamRecognize.class
+com/example/speech/TextDemo$1.class
 com/example/speech/synthesisTest.class
 com/example/speech/Recognize$1.class
-com/example/speech/TextDemo$1.class
 com/example/speech/Recognize.class
