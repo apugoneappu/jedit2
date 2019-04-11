@@ -7,12 +7,17 @@ import java.io.*;
 import java.awt.event.*;
 import java.awt.datatransfer.*;
 
+import java.util.regex.Matcher; 
+import java.util.regex.Pattern;
+
 public class Snippet implements ActionListener {
 
     String find, replace;
     JButton btnFind;
     JButton btnReplace;
+    JButton btnFindRegex;
     JButton btnReplaceAll;
+
     JTextField txtFind; 
     JTextField txtReplace;
     JEditorPane editorPane;
@@ -21,17 +26,23 @@ public class Snippet implements ActionListener {
 
         editorPane = ePane;
         JDialog frDialog = new JDialog();
-        frDialog.setLayout(new GridLayout(3,4));
+        frDialog.setLayout(new GridLayout(4,4));
 
         txtFind = new JTextField();
         txtReplace = new JTextField();
         btnFind = new JButton("Find");
         btnReplace = new JButton("Replace");
         btnReplaceAll = new JButton("Replace All");
+        btnFindRegex = new JButton("Use Regex");
+
         frDialog.add(new JLabel("Find: "));
         frDialog.add(txtFind);
         frDialog.add(new JLabel(""));
         frDialog.add(btnFind);
+        frDialog.add(new JLabel(""));
+        frDialog.add(new JLabel(""));
+        frDialog.add(new JLabel(""));
+        frDialog.add(btnFindRegex);
         frDialog.add(new JLabel("Replace with: "));
         frDialog.add(txtReplace);
         frDialog.add(new JLabel(""));
@@ -46,6 +57,9 @@ public class Snippet implements ActionListener {
 
         btnFind.addActionListener(this);
         btnFind.setActionCommand("find");
+
+        btnFindRegex.addActionListener(this);
+        btnFindRegex.setActionCommand("findRegex");
 
         btnReplace.addActionListener(this);
         btnReplace.setActionCommand("replace");
@@ -67,12 +81,33 @@ public class Snippet implements ActionListener {
 
                 javax.swing.text.DefaultHighlighter.DefaultHighlightPainter highlightPainter = new javax.swing.text.DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
                 try {
-                    int index = text.indexOf(find);
+                        int index = text.indexOf(find);
                     for (; index < text.length() && index != -1;) {
                         editorPane.getHighlighter().addHighlight(index, index + find.length(), highlightPainter);
                         index = text.indexOf(find, index+find.length())   ;
                     }
                 }
+                catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+        if (evt.getActionCommand().equals("findRegex")) {
+            String find = txtFind.getText();
+            String text = editorPane.getText();
+
+            Pattern pattern = Pattern.compile(find, Pattern.CASE_INSENSITIVE); 
+            Matcher m = pattern.matcher(text); 
+
+
+            while (m.find()){
+
+                //highlight all matches
+                try {
+                        javax.swing.text.DefaultHighlighter.DefaultHighlightPainter highlightPainter = new javax.swing.text.DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+                        editorPane.getHighlighter().addHighlight(m.start(), m.end()-1, highlightPainter);
+                    }
                 catch (Exception e) {
                     System.out.println(e);
                 }
