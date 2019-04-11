@@ -37,6 +37,39 @@ import org.drjekyll.fontchooser.*;
 import com.example.texttospeech.*;
 import com.google.protobuf.ByteString;
 
+import java.text.DateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+import javax.swing.JLabel;
+
+class ClockPane extends JPanel {
+
+    private JLabel clock = new JLabel();
+    // clock.setBorder(BorderFactory.createLineBorder(Color.black));
+
+    public ClockPane() {
+        setLayout(new BorderLayout());
+        tickTock();
+        add(clock, BorderLayout.WEST);
+        Timer timer = new Timer(500, new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            tickTock();
+          }
+        });
+        timer.setRepeats(true);
+        timer.setCoalesce(true);
+        timer.setInitialDelay(0);
+        timer.start();
+    }
+
+    public void tickTock() {
+        clock.setText(DateFormat.getDateTimeInstance().format(new Date()));
+    }
+
+}
+
+
 public class TextDemo extends JPanel implements ActionListener{
 
     String file = "";
@@ -594,6 +627,51 @@ public class TextDemo extends JPanel implements ActionListener{
 
         }
 
+
+        // For exit command
+        if (evt.getActionCommand().equals("exit")) {
+
+            String str = editorPane.getText(); 
+            String filename = "";
+            if(file.isEmpty())
+            {
+                try{
+                    final JFileChooser fc = new JFileChooser();
+
+                    // Creates the dialogue box
+                    int r = fc.showSaveDialog(null); 
+                    // if the user selects a file 
+                    if (r == JFileChooser.APPROVE_OPTION) 
+                    { 
+                        // set the label to the path of the selected file 
+                        filename = fc.getSelectedFile().getAbsolutePath(); 
+                    }
+                    file = filename;
+
+                }catch(Exception e)
+                {
+                    System.out.println("Exception:"+e);
+                }
+            }
+            else 
+                filename = file;
+            try{ 
+                // attach a file to FileWriter  
+                FileWriter fw = new FileWriter(filename); 
+
+                // read character wise from string and write into FileWriter  
+                for (int i = 0; i < str.length(); i++) 
+                    fw.write(str.charAt(i)); 
+
+                fw.close(); 
+            }catch(Exception e)
+            {
+                System.out.println("Exception:"+e);        
+            }
+            System.exit(0);
+
+        }
+
         // For new command
         if (evt.getActionCommand().equals("new")) {
 
@@ -663,6 +741,8 @@ public class TextDemo extends JPanel implements ActionListener{
 
     }
 
+
+   
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
@@ -675,6 +755,10 @@ public class TextDemo extends JPanel implements ActionListener{
         JFrame frame = new JFrame("TextDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        frame.add(new ClockPane(),BorderLayout.SOUTH);
+        frame.pack();
+        frame.setVisible(true);
+
         frame.setPreferredSize(new Dimension(800, 500));
         TextDemo tD = new TextDemo();
         frame.getContentPane().add(tD);
@@ -683,7 +767,7 @@ public class TextDemo extends JPanel implements ActionListener{
         JMenu editMenu, fileMenu, viewMenu, formatMenu, clipboardMenu, speechMenu;
 
         JMenuItem clipboardMenuItem_1, clipboardMenuItem_2, clipboardMenuItem_3, clipboardMenuItem_4, clipboardMenuItem_5;
-        JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
+        JMenuItem newMenuItem, saveMenuItem, openMenuItem, exitMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
         JMenuItem fullScreenMenuItem;
 
@@ -738,6 +822,15 @@ public class TextDemo extends JPanel implements ActionListener{
         saveMenuItem.setActionCommand("save");
         fileMenu.add(saveMenuItem);
 
+        exitMenuItem = new JMenuItem("Exit",
+                KeyEvent.VK_E);
+        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+        exitMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Exits the program asking to save the file if not saved");
+        exitMenuItem.addActionListener(tD);
+        exitMenuItem.setActionCommand("exit");
+        fileMenu.add(exitMenuItem);
 
 
 
@@ -991,6 +1084,8 @@ public class TextDemo extends JPanel implements ActionListener{
         //Add contents to the window.
 
         frame.setIconImage(new ImageIcon("./resources/yo.png").getImage());
+
+
 
         //Display the window.
         frame.pack();
