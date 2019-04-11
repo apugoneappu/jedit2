@@ -761,6 +761,22 @@ public class TextDemo extends JPanel implements ActionListener{
 
         }
 
+        if (evt.getActionCommand().equals("uppercase")) {
+
+            String text = editorPane.getText();
+            editorPane.setText(text.toUpperCase());
+        }
+
+        if (evt.getActionCommand().equals("lowercase")) {
+
+            String text = editorPane.getText();
+            editorPane.setText(text.toLowerCase());
+        }
+
+
+
+
+
     }
 
 
@@ -792,7 +808,7 @@ public class TextDemo extends JPanel implements ActionListener{
         JMenuItem newMenuItem, saveMenuItem, openMenuItem, exitMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
         JMenuItem fullScreenMenuItem, toggleDarkModeMenuItem;
-        JMenuItem fontMenuItem;
+        JMenuItem fontMenuItem, lowerCaseMenuItem, upperCaseMenuItem;
         JMenuItem t2sMenuItem, s2tMenuItem, t2sSaveAudioMenuItem;
 
         //Create the menu bar.
@@ -998,6 +1014,27 @@ public class TextDemo extends JPanel implements ActionListener{
         fontMenuItem.addActionListener(tD);
         fontMenuItem.setActionCommand("font");
         formatMenu.add(fontMenuItem);
+
+        lowerCaseMenuItem = new JMenuItem("Convert to lowercase",
+                KeyEvent.VK_L);
+        lowerCaseMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+        lowerCaseMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Converts the complete document to lowercase");
+        lowerCaseMenuItem.addActionListener(tD);
+        lowerCaseMenuItem.setActionCommand("lowercase");
+        formatMenu.add(lowerCaseMenuItem);
+
+        upperCaseMenuItem = new JMenuItem("Convert to uppercase",
+                KeyEvent.VK_U);
+        upperCaseMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_U, ActionEvent.CTRL_MASK));
+        upperCaseMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Converts the complete document to uppercase");
+        upperCaseMenuItem.addActionListener(tD);
+        upperCaseMenuItem.setActionCommand("uppercase");
+        formatMenu.add(upperCaseMenuItem);
+
 
 
 
