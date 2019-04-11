@@ -758,7 +758,7 @@ public class TextDemo extends JPanel implements ActionListener{
         JFrame frame = new JFrame("TextDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.add(new ClockPane(),BorderLayout.SOUTH);
+        frame.add(new ClockPane(),BorderLayout.SOUTH );
         frame.pack();
         frame.setVisible(true);
 
