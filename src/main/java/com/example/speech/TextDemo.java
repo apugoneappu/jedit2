@@ -33,10 +33,14 @@ import javax.swing.undo.UndoManager;
 
 import org.drjekyll.fontchooser.*;
 
+//text to speech
+import com.example.texttospeech.*;
+import com.google.protobuf.ByteString;
 
 public class TextDemo extends JPanel implements ActionListener{
 
     String file = "";
+    String audiofile = "";
     protected JEditorPane editorPane;
     protected JButton button_t2s;
     protected JButton button_s2t;
@@ -228,9 +232,65 @@ public class TextDemo extends JPanel implements ActionListener{
         // For text to speech command
         if (evt.getActionCommand().equals("text2speech")) {
             String text = editorPane.getText();
-            text2Speech.read(text);
+
+            try {
+                new SynthesizeText().createFile(text, "./resources/output.mp3");
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+
+            new AudioTest().play("./resources/output.mp3");
+
         }
 
+        if (evt.getActionCommand().equals("text2speechFile")) {
+
+            String text = editorPane.getText();
+
+            //if the audio file hasn't been saved even once
+            if (audiofile.isEmpty()) {
+
+                try{
+                    final JFileChooser fc = new JFileChooser();
+
+                    // Creates the dialogue box
+                    int r = fc.showSaveDialog(null); 
+                    // if the user selects a file 
+                    if (r == JFileChooser.APPROVE_OPTION) 
+                    { 
+                        // set the label to the path of the selected file 
+                        audiofile = fc.getSelectedFile().getAbsolutePath(); 
+
+                        try {
+                            new SynthesizeText().createFile(text, audiofile);
+                        }
+                        catch (Exception e) {
+                            System.out.println(e);
+                        }
+
+                    }
+
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Exception:"+e);
+                }
+            }
+
+            //if the audio file has been saved, overwrie
+            else {
+                try {
+                    new SynthesizeText().createFile(text, audiofile);
+                }
+                catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
+
+        }
+ 
         // For stoping the text to speech conversion
         if (evt.getActionCommand().equals("stop")) {
             //text2Speech.stop();
@@ -490,36 +550,7 @@ public class TextDemo extends JPanel implements ActionListener{
 
         }
 
-        // For font size command
-        if (evt.getActionCommand().equals("font_size")) {
 
-            String filename = "";
-            try{
-                final JFileChooser fc = new JFileChooser("/home/shrey/jedit/voce/samples/synthesisTest/java/fonts");
-
-                // Creates the dialogue box
-                int r = fc.showOpenDialog(null); 
-
-                // if the user selects a file 
-                if (r == JFileChooser.APPROVE_OPTION) 
-                { 
-                    // set the label to the path of the selected file 
-                    filename = fc.getSelectedFile().getName(); 
-                } 
-
-                editorPane.setFont(new Font(filename,0,40));
-                // editorPane.setSelectedTextColor(Color.green);
-
-                // String text; 
-                // while ((text = br.readLine()) != null) 
-                //   editorPane.setText(editorPane.getText() + " \n" + text); 
-
-            }catch(Exception e)
-            {
-                System.out.println("Exception:"+e);
-            }
-
-        }
         // For save command
         if (evt.getActionCommand().equals("save")) {
 
@@ -649,12 +680,15 @@ public class TextDemo extends JPanel implements ActionListener{
         frame.getContentPane().add(tD);
 
         JMenuBar menuBar;
-        JMenu editMenu, fileMenu, formatMenu, speechMenu, clipboardMenu;
+        JMenu editMenu, fileMenu, viewMenu, formatMenu, clipboardMenu, speechMenu;
+
+        JMenuItem clipboardMenuItem_1, clipboardMenuItem_2, clipboardMenuItem_3, clipboardMenuItem_4, clipboardMenuItem_5;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
-        JMenuItem clipboardMenuItem_1, clipboardMenuItem_2, clipboardMenuItem_3, clipboardMenuItem_4, clipboardMenuItem_5;
+        JMenuItem fullScreenMenuItem;
+
         JMenuItem fontMenuItem;
-        JMenuItem t2sMenuItem, s2tMenuItem;
+        JMenuItem t2sMenuItem, s2tMenuItem, t2sSaveAudioMenuItem;
 
         //Create the menu bar.
         menuBar = new JMenuBar();
@@ -707,6 +741,33 @@ public class TextDemo extends JPanel implements ActionListener{
 
 
 
+
+        //Build the view menu
+        viewMenu = new JMenu("View");
+        viewMenu.setMnemonic(KeyEvent.VK_V);
+        viewMenu.getAccessibleContext().setAccessibleDescription(
+                "The view menu contains options like full screen mode and changing themes.");
+        menuBar.add(viewMenu);
+
+        //a group of JMenuItems
+        newMenuItem = new JMenuItem("Full Screen",
+                KeyEvent.VK_F);
+        newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_F, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK + ActionEvent.META_MASK));
+        newMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Change the document to full screen mode.");
+        newMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                    frame.setExtendedState(JFrame.NORMAL); 
+                }
+                if (frame.getExtendedState() == JFrame.NORMAL) {
+                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+                }
+            }
+        }); 
+        viewMenu.add(newMenuItem);
 
 
 
@@ -852,6 +913,16 @@ public class TextDemo extends JPanel implements ActionListener{
         s2tMenuItem.addActionListener(tD);
         s2tMenuItem.setActionCommand("speech2text");
         speechMenu.add(s2tMenuItem);
+
+        t2sSaveAudioMenuItem = new JMenuItem("Save as audio file",
+                KeyEvent.VK_O);
+        t2sSaveAudioMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_O, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+        t2sSaveAudioMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Saves the audio of the current document in .mp3 format");
+        t2sSaveAudioMenuItem.addActionListener(tD);
+        t2sSaveAudioMenuItem.setActionCommand("text2speechFile");
+        speechMenu.add(t2sSaveAudioMenuItem);
 
 
 

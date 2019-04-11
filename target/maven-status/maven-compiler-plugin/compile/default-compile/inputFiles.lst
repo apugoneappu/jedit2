@@ -1,6 +1,11 @@
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/Recognize.java
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/synthesisTest.java
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/TextDemo.java
+/Users/apoorve/cloud-client/src/main/java/com/example/texttospeech/SynthesizeText.java
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/InfiniteStreamRecognize.java
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/QuickstartSample.java
+/Users/apoorve/cloud-client/src/main/java/com/example/texttospeech/SynthesizeFile.java
+/Users/apoorve/cloud-client/src/main/java/com/example/texttospeech/ListAllSupportedVoices.java
+/Users/apoorve/cloud-client/src/main/java/com/example/speech/AudioTest.java
+/Users/apoorve/cloud-client/src/main/java/com/example/texttospeech/QuickstartSample.java
 /Users/apoorve/cloud-client/src/main/java/com/example/speech/Snippet.java
