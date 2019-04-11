@@ -646,6 +646,9 @@ public class TextDemo extends JPanel implements ActionListener{
                         // set the label to the path of the selected file 
                         filename = fc.getSelectedFile().getAbsolutePath(); 
                     }
+                    else {
+                        return;
+                    }
                     file = filename;
 
                 }catch(Exception e)
