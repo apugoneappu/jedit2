@@ -765,9 +765,9 @@ public class TextDemo extends JPanel implements ActionListener {
         speechMenu.add(s2tMenuItem);
 
         t2sSaveAudioMenuItem = new JMenuItem("Save as audio file",
-                KeyEvent.VK_F);
+                KeyEvent.VK_O);
         t2sSaveAudioMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-                    KeyEvent.VK_S, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+                    KeyEvent.VK_O, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
         t2sSaveAudioMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Saves the audio of the current document in .mp3 format");
         t2sSaveAudioMenuItem.addActionListener(tD);
