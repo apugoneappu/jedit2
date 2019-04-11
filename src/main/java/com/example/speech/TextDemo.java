@@ -557,9 +557,10 @@ public class TextDemo extends JPanel implements ActionListener {
         frame.getContentPane().add(tD);
 
         JMenuBar menuBar;
-        JMenu editMenu, fileMenu, formatMenu, speechMenu;
+        JMenu editMenu, fileMenu, viewMenu, formatMenu, speechMenu;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
+        JMenuItem fullScreenMenuItem;
         JMenuItem fontMenuItem;
         JMenuItem t2sMenuItem, s2tMenuItem, t2sSaveAudioMenuItem;
 
@@ -614,6 +615,33 @@ public class TextDemo extends JPanel implements ActionListener {
 
 
 
+
+        //Build the view menu
+        viewMenu = new JMenu("View");
+        viewMenu.setMnemonic(KeyEvent.VK_V);
+        viewMenu.getAccessibleContext().setAccessibleDescription(
+                "The view menu contains options like full screen mode and changing themes.");
+        menuBar.add(viewMenu);
+
+        //a group of JMenuItems
+        newMenuItem = new JMenuItem("Full Screen",
+                KeyEvent.VK_F);
+        newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_F, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK + ActionEvent.META_MASK));
+        newMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Change the document to full screen mode.");
+        newMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                    frame.setExtendedState(JFrame.NORMAL); 
+                }
+                if (frame.getExtendedState() == JFrame.NORMAL) {
+                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+                }
+            }
+        }); 
+        viewMenu.add(newMenuItem);
 
 
 
