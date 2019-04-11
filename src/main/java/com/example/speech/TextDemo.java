@@ -3,6 +3,7 @@ package com.example.speech;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.*;
 import java.io.*;
 import java.awt.datatransfer.*;
 
@@ -37,6 +38,8 @@ import org.drjekyll.fontchooser.*;
 import com.example.texttospeech.*;
 import com.google.protobuf.ByteString;
 
+import javax.swing.text.Document;
+import javax.swing.text.html.*;
 public class TextDemo extends JPanel implements ActionListener {
 
     String file = "";
@@ -57,6 +60,7 @@ public class TextDemo extends JPanel implements ActionListener {
     protected JButton button_selectAll;
     protected JButton button_font;
     protected UndoManager undoManager;
+    static Color defaultColor;
 
     Clipboard clipboard;
     synthesisTest text2Speech;
@@ -97,6 +101,8 @@ public class TextDemo extends JPanel implements ActionListener {
                 });
 
 
+        editorPane.setFont(new Font("Seravek", Font.PLAIN, 20));
+        defaultColor = editorPane.getBackground();
 
         //Add Components to this panel.
         GridBagConstraints c = new GridBagConstraints();
@@ -223,6 +229,7 @@ public class TextDemo extends JPanel implements ActionListener {
         button_redo.setEnabled(false);
 
     }
+
 
     public void actionPerformed(ActionEvent evt) {
 
@@ -538,6 +545,19 @@ public class TextDemo extends JPanel implements ActionListener {
 
         }
 
+        if (evt.getActionCommand().equals("toggledarkmode")) {
+            //if in white mode, go to dark mode
+            if (editorPane.getBackground() == defaultColor) {
+                editorPane.setBackground(Color.LIGHT_GRAY);
+            }
+
+            //if not in white mode, go to white mode
+            else {
+                editorPane.setBackground(defaultColor);
+            }
+
+        }
+
     }
 
     /**
@@ -560,13 +580,12 @@ public class TextDemo extends JPanel implements ActionListener {
         JMenu editMenu, fileMenu, viewMenu, formatMenu, speechMenu;
         JMenuItem newMenuItem, saveMenuItem, openMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
-        JMenuItem fullScreenMenuItem;
+        JMenuItem fullScreenMenuItem, toggleDarkModeMenuItem;
         JMenuItem fontMenuItem;
         JMenuItem t2sMenuItem, s2tMenuItem, t2sSaveAudioMenuItem;
 
         //Create the menu bar.
         menuBar = new JMenuBar();
-
 
 
 
@@ -624,13 +643,13 @@ public class TextDemo extends JPanel implements ActionListener {
         menuBar.add(viewMenu);
 
         //a group of JMenuItems
-        newMenuItem = new JMenuItem("Full Screen",
+        fullScreenMenuItem = new JMenuItem("Full Screen",
                 KeyEvent.VK_F);
-        newMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+        fullScreenMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                     KeyEvent.VK_F, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK + ActionEvent.META_MASK));
-        newMenuItem.getAccessibleContext().setAccessibleDescription(
+        fullScreenMenuItem.getAccessibleContext().setAccessibleDescription(
                 "Change the document to full screen mode.");
-        newMenuItem.addActionListener(new ActionListener() {
+        fullScreenMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
                 if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
@@ -641,7 +660,18 @@ public class TextDemo extends JPanel implements ActionListener {
                 }
             }
         }); 
-        viewMenu.add(newMenuItem);
+        viewMenu.add(fullScreenMenuItem);
+
+        toggleDarkModeMenuItem = new JMenuItem("Toggle Dark Mode",
+                KeyEvent.VK_D);
+        toggleDarkModeMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_D, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK + ActionEvent.META_MASK));
+        toggleDarkModeMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Toggles the dark mode");
+        toggleDarkModeMenuItem.addActionListener(tD); 
+        toggleDarkModeMenuItem.setActionCommand("toggledarkmode");
+        viewMenu.add(toggleDarkModeMenuItem);
+
 
 
 
@@ -801,8 +831,6 @@ public class TextDemo extends JPanel implements ActionListener {
         t2sSaveAudioMenuItem.addActionListener(tD);
         t2sSaveAudioMenuItem.setActionCommand("text2speechFile");
         speechMenu.add(t2sSaveAudioMenuItem);
-
-
 
         frame.setJMenuBar(menuBar);
 
