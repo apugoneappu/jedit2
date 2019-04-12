@@ -46,6 +46,8 @@ import javax.swing.JLabel;
 import javax.swing.text.Document;
 import javax.swing.text.html.*;
 
+import java.awt.print.*;
+
 class ClockPane extends JPanel {
 
     private JLabel clock = new JLabel();
@@ -73,7 +75,7 @@ class ClockPane extends JPanel {
 
 }
 
-public class TextDemo extends JPanel implements ActionListener{
+public class TextDemo extends JPanel implements ActionListener, Printable{
     String file = "";
     String audiofile = "";
     protected JEditorPane editorPane;
@@ -592,6 +594,79 @@ public class TextDemo extends JPanel implements ActionListener{
 
         }
 
+        if (evt.getActionCommand().equals("print")) {
+
+            String str = editorPane.getText(); 
+            String filename = "";
+            if(file.isEmpty())
+            {
+                try{
+                    final JFileChooser fc = new JFileChooser();
+
+                    // Creates the dialogue box
+                    int r = fc.showSaveDialog(null); 
+                    // if the user selects a file 
+                    if (r == JFileChooser.APPROVE_OPTION) 
+                    { 
+                        // set the label to the path of the selected file 
+                        filename = fc.getSelectedFile().getAbsolutePath(); 
+                        file = filename;
+                    }
+                    else 
+                    {
+                        return ;
+                    }
+
+
+                }catch(Exception e)
+                {
+                    System.out.println("Exception:"+e);
+                }
+            }
+            else 
+            {
+                filename = file;
+            }
+
+            try{ 
+                // attach a file to FileWriter  
+                FileWriter fw = new FileWriter(file); 
+
+                // read character wise from string and write into FileWriter  
+                for (int i = 0; i < str.length(); i++) 
+                    fw.write(str.charAt(i)); 
+
+                fw.close(); 
+            }catch(Exception e)
+            {
+                System.out.println("Exception:"+e);        
+            }
+
+
+            // try {
+                
+            //     File file = new File(filename);
+            //     Desktop.getDesktop().print(file);
+
+            // }
+            // catch(Exception e)
+            // {
+            //     System.out.println("Exception:"+e);
+            // }
+
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setPrintable(this);
+            boolean ok = job.printDialog();
+            if (ok) {
+             try {
+                  job.print();
+             } catch (PrinterException ex) {
+              /* The job did not successfully complete */
+             }
+         }
+
+        }
+
 
         // For save command
         if (evt.getActionCommand().equals("save")) {
@@ -741,6 +816,9 @@ public class TextDemo extends JPanel implements ActionListener{
             updateButtons();
 
         }
+
+        
+
         if (evt.getActionCommand().equals("redo")) {
             try {
                 undoManager.redo();
@@ -778,7 +856,7 @@ public class TextDemo extends JPanel implements ActionListener{
                 String text = editorPane.getText();
                 String selected_text = editorPane.getSelectedText();
                 String selected_text_upper = selected_text.toUpperCase();
-                editorPane.setText(text.replace(selected_text, selected_text_upper));
+                editorPane.replaceSelection(selected_text_upper);
             }
         }
 
@@ -799,7 +877,7 @@ public class TextDemo extends JPanel implements ActionListener{
                 String text = editorPane.getText();
                 String selected_text = editorPane.getSelectedText();
                 String selected_text_lower = selected_text.toLowerCase();
-                editorPane.setText(text.replace(selected_text, selected_text_lower));
+                editorPane.replaceSelection(selected_text_lower);
             }
         }
 
@@ -810,6 +888,25 @@ public class TextDemo extends JPanel implements ActionListener{
     }
 
 
+    public int print(Graphics g, PageFormat pf, int page) throws
+                                                        PrinterException {
+
+        if (page > 0) { /* We have only one page, and 'page' is zero-based */
+            return NO_SUCH_PAGE;
+        }
+
+        /* User (0,0) is typically outside the imageable area, so we must
+         * translate by the X and Y values in the PageFormat to avoid clipping
+         */
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+        /* Now we perform our rendering */
+        g.drawString("Hello world!", 100, 100);
+
+        /* tell the caller that this page is part of the printed document */
+        return PAGE_EXISTS;
+    }
    
     /**
      * Create the GUI and show it.  For thread safety,
@@ -835,7 +932,7 @@ public class TextDemo extends JPanel implements ActionListener{
         JMenu editMenu, fileMenu, viewMenu, formatMenu, clipboardMenu, speechMenu;
 
         JMenuItem clipboardMenuItem_1, clipboardMenuItem_2, clipboardMenuItem_3, clipboardMenuItem_4, clipboardMenuItem_5;
-        JMenuItem newMenuItem, saveMenuItem, openMenuItem, exitMenuItem; 
+        JMenuItem newMenuItem, saveMenuItem, openMenuItem, exitMenuItem, printMenuItem; 
         JMenuItem selectAllMenuItem, undoMenuItem, redoMenuItem, cutMenuItem, copyMenuItem, pasteMenuItem, fandrMenuItem;
         JMenuItem fullScreenMenuItem, toggleDarkModeMenuItem;
         JMenuItem fontMenuItem, lowerCaseMenuItem, upperCaseMenuItem;
@@ -887,6 +984,16 @@ public class TextDemo extends JPanel implements ActionListener{
         saveMenuItem.addActionListener(tD);
         saveMenuItem.setActionCommand("save");
         fileMenu.add(saveMenuItem);
+
+        printMenuItem = new JMenuItem("Print",
+                KeyEvent.VK_P);
+        printMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        printMenuItem.getAccessibleContext().setAccessibleDescription(
+                "Allows to print the current file.");
+        printMenuItem.addActionListener(tD);
+        printMenuItem.setActionCommand("print");
+        fileMenu.add(printMenuItem);
 
         exitMenuItem = new JMenuItem("Exit",
                 KeyEvent.VK_E);
