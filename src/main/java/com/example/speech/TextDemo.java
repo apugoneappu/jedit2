@@ -766,14 +766,41 @@ public class TextDemo extends JPanel implements ActionListener{
 
         if (evt.getActionCommand().equals("uppercase")) {
 
-            String text = editorPane.getText();
-            editorPane.setText(text.toUpperCase());
+            //if no text is selected, make all uppercase
+            if (editorPane.getSelectedText() == null) {
+
+                String text = editorPane.getText();
+                editorPane.setText(text.toUpperCase());
+            }
+
+            //some text is selected, uppercase only that
+            else {
+                String text = editorPane.getText();
+                String selected_text = editorPane.getSelectedText();
+                String selected_text_upper = selected_text.toUpperCase();
+                editorPane.setText(text.replace(selected_text, selected_text_upper));
+            }
         }
+
+
+
 
         if (evt.getActionCommand().equals("lowercase")) {
 
-            String text = editorPane.getText();
-            editorPane.setText(text.toLowerCase());
+            //if no text is selected, make all lowercase
+            if (editorPane.getSelectedText() == null) {
+
+                String text = editorPane.getText();
+                editorPane.setText(text.toLowerCase());
+            }
+
+            //some text is selected, lowercase only that
+            else {
+                String text = editorPane.getText();
+                String selected_text = editorPane.getSelectedText();
+                String selected_text_lower = selected_text.toLowerCase();
+                editorPane.setText(text.replace(selected_text, selected_text_lower));
+            }
         }
 
 
