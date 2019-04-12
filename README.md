@@ -54,8 +54,7 @@ Clipboard menu
 - ```echo 'export GOOGLE_APPLICATION_CREDENTIALS="$PWD/Jedit-d618ac66ba93.json"' >> ~/.bashrc``` 
 
 ## Steps to build the Maven project -
-1. Run the bash script scripts/compile.sh
-The first build may take some time as some components are downloaded from the Maven repository. Please be patient.
+1. Run the bash script scripts/compile.sh</br>The first build may take some time as some components are downloaded from the Maven repository. Please be patient.
 
 
 ## Steps to run the Maven project -
