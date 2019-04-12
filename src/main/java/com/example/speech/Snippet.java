@@ -17,23 +17,27 @@ public class Snippet implements ActionListener {
     JButton btnReplace;
     JButton btnFindRegex;
     JButton btnReplaceAll;
+    JButton btnExit;
 
     JTextField txtFind; 
     JTextField txtReplace;
     JEditorPane editorPane;
+    JDialog frDialog;
 
     Snippet(JEditorPane ePane) {
 
         editorPane = ePane;
-        JDialog frDialog = new JDialog();
-        frDialog.setLayout(new GridLayout(4,4));
+        frDialog = new JDialog();
+        frDialog.setLayout(new GridLayout(5,4));
 
+        frDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         txtFind = new JTextField();
         txtReplace = new JTextField();
         btnFind = new JButton("Find");
         btnReplace = new JButton("Replace");
         btnReplaceAll = new JButton("Replace All");
         btnFindRegex = new JButton("Use Regex");
+        btnExit = new JButton("Close");
 
         frDialog.add(new JLabel("Find: "));
         frDialog.add(txtFind);
@@ -51,6 +55,11 @@ public class Snippet implements ActionListener {
         frDialog.add(new JLabel(""));
         frDialog.add(new JLabel(""));
         frDialog.add(btnReplaceAll);
+        frDialog.add(new JLabel(""));
+        frDialog.add(new JLabel(""));
+        frDialog.add(new JLabel(""));
+        frDialog.add(btnExit);
+
 
         frDialog.pack();
         frDialog.setVisible(true);
@@ -66,10 +75,19 @@ public class Snippet implements ActionListener {
 
         btnReplaceAll.addActionListener(this);
         btnReplaceAll.setActionCommand("replaceAll");
+        
+        btnExit.addActionListener(this);
+        btnExit.setActionCommand("exit");
     }
+
+
 
     public void actionPerformed(ActionEvent evt) {
 
+        if (evt.getActionCommand().equals("exit")) {
+            editorPane.getHighlighter().removeAllHighlights();
+            frDialog.setVisible(false);
+        }
 
         //for find and highlight
         if (evt.getActionCommand().equals("find")) {
@@ -106,7 +124,7 @@ public class Snippet implements ActionListener {
                 //highlight all matches
                 try {
                         javax.swing.text.DefaultHighlighter.DefaultHighlightPainter highlightPainter = new javax.swing.text.DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
-                        editorPane.getHighlighter().addHighlight(m.start(), m.end()-1, highlightPainter);
+                        editorPane.getHighlighter().addHighlight(m.start(), m.end(), highlightPainter);
                     }
                 catch (Exception e) {
                     System.out.println(e);

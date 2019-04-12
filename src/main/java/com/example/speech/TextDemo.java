@@ -571,8 +571,10 @@ public class TextDemo extends JPanel implements ActionListener, Printable{
 
         if (evt.getActionCommand().equals("fandr")) {
             Snippet fandr = new Snippet(editorPane);
+            /*
             String str = editorPane.getText(); 
             editorPane.setText(str);
+            */
 
         }
 
