@@ -13,7 +13,6 @@ This version introduces an all new ___multi-clipboard feature___, now allowing t
 
 ## [Software requirement specification (SRS) document](https://docs.google.com/document/d/19rsumU4RA4xAgYwJQ8I1sW9n2HOq506zWT5-1q7sbfI/edit?usp=sharing)
 
-## Sample images - 
 File menu -
 ![File Menu](https://drive.google.com/uc?export=view&id=1VlL-rKaIrXe_4m3FqdUmy8OP7_0zYbiE)
 
