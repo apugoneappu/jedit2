@@ -35,6 +35,9 @@ Speech menu
 Clipboard menu
 ![Clipboard Menu](https://drive.google.com/uc?export=view&id=1lPdUNpohXPO-8jPVWEOzfCUiXnohbym6)
 
+## Platforms supported -
+Built with Java, so platform independent.
+
 ## Build status - 
 [![Build Status](https://travis-ci.com/apugoneappu/jedit.svg?branch=greatest)](https://travis-ci.com/apugoneappu/jedit)
 
