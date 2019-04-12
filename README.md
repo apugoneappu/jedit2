@@ -36,7 +36,7 @@ Clipboard menu
 ![Clipboard Menu](https://drive.google.com/uc?export=view&id=1lPdUNpohXPO-8jPVWEOzfCUiXnohbym6)
 
 ## Build status - 
-[![Build Status](https://travis-ci.com/apugoneappu/jedit2.svg?token=3rjyHtzBq9YfjUwjqaEg&branch=master)](https://travis-ci.com/apugoneappu/jedit2)
+[![Build Status](https://travis-ci.com/apugoneappu/jedit.svg?branch=greatest)](https://travis-ci.com/apugoneappu/jedit)
 
 ## Prerequisites -
 1. [Install Maven](https://maven.apache.org/install.html)
