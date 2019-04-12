@@ -19,11 +19,13 @@
 - ```echo 'export GOOGLE_APPLICATION_CREDENTIALS="$PWD/Jedit-d618ac66ba93.json"' >> ~/.bashrc``` 
 
 ## Steps to build the Maven project -
-1. Change directory to the cloned directory.
-2. ```mvn package```
+1. Run the bash script scripts/compile.sh
 The first build may take some time as some components are downloaded from the Maven repository. Please be patient.
 
 
 ## Steps to run the Maven project -
-1. Change directory to the cloned directory.
-2. ```mvn -exec:java -DTextDemo```
+1. Run the bash script scripts/compile_run.sh
+
+## [Software requirement specification (SRS) document](https://docs.google.com/document/d/19rsumU4RA4xAgYwJQ8I1sW9n2HOq506zWT5-1q7sbfI/edit?usp=sharing)
+
+
