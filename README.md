@@ -12,23 +12,27 @@ This version introduces an all new ___multi-clipboard feature___, now allowing t
 
 
 ## [Software requirement specification (SRS) document](https://docs.google.com/document/d/19rsumU4RA4xAgYwJQ8I1sW9n2HOq506zWT5-1q7sbfI/edit?usp=sharing)
+Use case diagram -
+![Use case diagram](https://drive.google.com/uc?export=view&id=1LBezxdmMROcVJnladBF8DJV4kGEE7pUA)
 
-File menu -
+-------------------------------------
+## GUI Overview -
+File menu 
 ![File Menu](https://drive.google.com/uc?export=view&id=1VlL-rKaIrXe_4m3FqdUmy8OP7_0zYbiE)
 
-View menu - 
+View menu
 ![View Menu](https://drive.google.com/uc?export=view&id=1xm1JwPTygxrFZoJXGJ8OMX1li4pNJ0hk)
 
-Edit menu -
+Edit menu
 ![Edit Menu](https://drive.google.com/uc?export=view&id=1EMeiaQSP5N2ibElRocIYBtgP9m-bMg-f)
 
-Format menu -
+Format menu
 ![Format Menu](https://drive.google.com/uc?export=view&id=17op2njWS7Wi1hrgi6n7eH7n8nvwPi6db)
 
-Speech menu - 
+Speech menu 
 ![Speech Menu](https://drive.google.com/uc?export=view&id=1y9zWPeE2X52RX3PjiiQGcjwCpZPDK6U_)
 
-Clipboard menu -
+Clipboard menu
 ![Clipboard Menu](https://drive.google.com/uc?export=view&id=1lPdUNpohXPO-8jPVWEOzfCUiXnohbym6)
 
 ## Build status - 
