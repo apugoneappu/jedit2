@@ -917,7 +917,7 @@ public class TextDemo extends JPanel implements ActionListener, Printable{
         //Create and set up the window.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        JFrame frame = new JFrame("TextDemo");
+        JFrame frame = new JFrame("Jedit");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.add(new ClockPane(),BorderLayout.SOUTH );
